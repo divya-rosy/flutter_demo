@@ -35,10 +35,20 @@ class Expense {
 String get formattedDate {
     return formatter.format(date);
   }
-  String get formattedAmount {
-    return '\$${amount.toStringAsFixed(2)}';
-  }
-  IconData get icon {
-    return categoryIcons[category] ?? Icons.error;
+}
+class ExpenseBucket {
+  ExpenseBucket(this.expenses, this.category);
+
+  ExpenseBucket.forCategory(List<Expense> allExpenses, this.category) : expenses = allExpenses.where((expense) => 
+  expense.category == category).toList();
+  final List<Expense> expenses;
+  final Category category;
+
+  double get totalExpenses {
+    double sum= 0;
+    for (final expense in expenses) {
+      sum += expense.amount;
+    }
+    return sum;
   }
 }
